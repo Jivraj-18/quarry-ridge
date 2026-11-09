@@ -58,9 +58,38 @@ R restarts, Esc quits.
 
 ## Source code
 
-The Unreal project and the scripts that build this level live in
-[Jivraj-18/sky-meadow](https://github.com/Jivraj-18/sky-meadow) (level `Maps/Lvl_Quarry`, scripts
-`tools/build_quarry.py`, `tools/build_quarry_road.py`, `tools/import_soldier.py`).
+This repo holds the Unreal Engine 5.7 project (`RealWorldGame/`) and the scripts that built the
+world (`tools/`). Levels:
+
+| Level | What it is |
+|---|---|
+| `Maps/Lvl_Quarry` | The game: the quarry, the soldier, the road and the car |
+| `Maps/Lvl_TreeLab` | Tree rendering experiment (Procedural Vegetation Editor trees) |
+
+The world is built by scripts run inside the editor: `make_heightmap_quarry.py` (terrain),
+`build_quarry.py` (landscape, rocks, trees, grass), `build_quarry_road.py` (road and car) and
+`import_soldier.py` (character). Everything they place is ordinary editable content: move rocks
+and trees, sculpt the Landscape, paint grass with the Foliage tool, and drag the road's spline points.
+
+Controls are code components on the character: `ShooterControls` (camera, sprint, jump) and
+`VehicleEntry` (E to get in and out of any Chaos vehicle).
+
+### Pieces you add yourself after cloning
+
+Some files can't be in a public repo:
+
+1. **Epic template content**: create a new UE 5.7 **Third Person** project (Blueprint) and copy
+   `Content/Characters`, `Input`, `LevelPrototyping`, `ThirdPerson`, `Variant_Platforming` and
+   their `__ExternalActors__`/`__ExternalObjects__` folders across.
+2. **Epic vehicle template**: copy `Templates/TP_VehicleAdvBP/Content/VehicleTemplate` and
+   `Templates/TemplateResources/Standard/Vehicles/Content` from the engine into `Content/`.
+3. **Poly Haven assets** (CC0, too big for git): `python3 tools/fetch_assets.py`, then
+   `tools/ue-headless.sh tools/import_quarry_assets.py` and `tools/import_quarry_plants.py`.
+4. **Mixamo soldier** (free, but not redistributable as raw files): download "Swat" and the
+   animations listed in `tools/import_soldier.py` from [mixamo.com](https://www.mixamo.com) into
+   `assets_src/mixamo/`, then run that script in the editor.
+
+Built and tested on Linux with an NVIDIA RTX 2050 (4 GB); see `launch-unreal.sh`.
 
 ## Credits
 
